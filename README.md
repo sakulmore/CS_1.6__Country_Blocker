@@ -18,5 +18,7 @@ A plugin that lets you specify which countries players can connect to the server
 
 `cb_viceversa` - Possible values: 1=true; 0=false. If the value is `0`, only players from the countries listed in the `cb_country` CVAR can join the server. If the value is `1`, all players EXCEPT those from the countries listed in the `cb_country` CVAR can join the server.
 
+`cb_allow_ip` - Enter the IP addresses of the players you want to allow to connect to the server regardless of the `cb_country` CVAR.
+
 # Support
 If you having any issues please feel free to write your issue to the issue section :) .

@@ -3,12 +3,13 @@
 #include <geoip>
 
 #define PLUGIN_NAME     "Country Blocker"
-#define PLUGIN_VERSION  "1.0"
+#define PLUGIN_VERSION  "1.1"
 #define PLUGIN_AUTHOR   "sakulmore"
 
 new g_pCvarCountry
 new g_pCvarEnabled
 new g_pCvarViceVersa
+new g_pCvarAllowIp
 
 public plugin_init() {
     register_plugin(PLUGIN_NAME, PLUGIN_VERSION, PLUGIN_AUTHOR)
@@ -16,6 +17,7 @@ public plugin_init() {
     g_pCvarCountry = register_cvar("cb_country", "")
     g_pCvarEnabled = register_cvar("cb_enabled", "0")
     g_pCvarViceVersa = register_cvar("cb_viceversa", "0")
+    g_pCvarAllowIp = register_cvar("cb_allow_ip", "")
 }
 
 public client_putinserver(id) {
@@ -23,15 +25,24 @@ public client_putinserver(id) {
     
     if (get_pcvar_num(g_pCvarEnabled) == 0) return PLUGIN_CONTINUE
     
-    new szCountries[128]
-    get_pcvar_string(g_pCvarCountry, szCountries, charsmax(szCountries))
-    
-    if (!szCountries[0]) return PLUGIN_CONTINUE
-    
     new szIP[32]
     get_user_ip(id, szIP, charsmax(szIP), 1)
     
     if (equal(szIP, "127.0.0.1") || equal(szIP, "loopback")) return PLUGIN_CONTINUE
+    
+    new szAllowedIps[512]
+    get_pcvar_string(g_pCvarAllowIp, szAllowedIps, charsmax(szAllowedIps))
+    
+    if (szAllowedIps[0]) {
+        if (contain(szAllowedIps, szIP) != -1) {
+            return PLUGIN_CONTINUE
+        }
+    }
+    
+    new szCountries[128]
+    get_pcvar_string(g_pCvarCountry, szCountries, charsmax(szCountries))
+    
+    if (!szCountries[0]) return PLUGIN_CONTINUE
     
     new szCode[3]
     new bool:bFound = false
