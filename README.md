@@ -4,6 +4,7 @@ A plugin that lets you specify which countries players can connect to the server
 # Installation
 - Just download the plugin and upload the .amxx file to your plugins folder on your server (or you can of course compile the .sma file and then upload the compilated .amxx file to your server).
 - Then write the plugin name (with .amxx) to `/cstrike/addons/amxmodx/configs/plugins.ini`.
+- Also download `GeoLite2_Country.mmdb` and `GeoLite2_City.mmdb` and place them in the `/cstrike/addons/amxmodx/data` folder.
 
 # Requirements
 - AMX Mod X 1.10
